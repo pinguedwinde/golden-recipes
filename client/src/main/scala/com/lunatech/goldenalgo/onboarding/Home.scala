@@ -4,10 +4,10 @@ import japgolly.scalajs.react._
 import japgolly.scalajs.react.feature.ReactFragment
 import japgolly.scalajs.react.vdom.VdomElement
 import japgolly.scalajs.react.vdom.html_<^._
-
 import japgolly.scalajs.react.extra.router.RouterCtl
 
 object Home {
+
   case class Props(
       ctl: RouterCtl[AppRouter.Page]
   )
@@ -15,10 +15,12 @@ object Home {
   private val component = ScalaComponent
     .builder[Props]("Home")
     .render_P { props =>
+
       val boxStyle = TagMod(
         ^.display := "flex",
         ^.flexDirection := "column"
       )
+
       <.div(
         ^.display := "flex",
         ^.flexDirection := "column",

@@ -5,7 +5,7 @@ import org.scalajs.dom
 import org.scalajs.dom._
 import japgolly.scalajs.react.vdom.html_<^._
 
-object SimpleApp {
+object App {
 
   @JSExport
   def main(args: Array[String]): Unit = {
