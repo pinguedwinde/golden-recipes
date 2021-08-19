@@ -4,17 +4,12 @@ import org.scalajs.dom.ext.Ajax
 import io.circe.parser._
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.util.{ Failure, Success }
-import diode._
 
+// Some scaffolding to get you started calling the backend
 object Backend {
 
   def fetchRecipes(): Unit = Ajax.get("/recipes").onComplete {
-    case Success(xhr) =>
-      decode[List[RecipeModel]](xhr.responseText).map { recipes =>
-        recipes.map { recipe =>
-          dispatch(RecipeActions.Add(recipe))
-        }
-      }
+    case Success(xhr) => decode[List[Recipe]](xhr.responseText)
     case Failure(t) => println("An error has occurred: " + t.getMessage)
 
   }
