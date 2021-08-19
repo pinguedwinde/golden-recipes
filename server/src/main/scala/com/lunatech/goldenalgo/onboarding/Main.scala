@@ -6,7 +6,6 @@ package com.lunatech.goldenalgo.onboarding
 
 import akka.actor.ActorSystem
 import scala.concurrent.ExecutionContext
-import scala.util.{ Failure, Success }
 
 object Main {
 

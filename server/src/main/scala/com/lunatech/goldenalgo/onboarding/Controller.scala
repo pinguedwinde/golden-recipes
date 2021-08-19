@@ -7,11 +7,11 @@ import akka.http.scaladsl.model._
 
 class Controller()(implicit val ec: ExecutionContext) {
 
-  val home = path("/recipes") {
+  val recipes = path("recipes") {
     get {
       complete(HttpEntity(ContentTypes.`application/json`, """{"recipes":"yummy"}"""))
     }
   }
 
-  val routes: Route = home
+  val routes: Route = recipes
 }
