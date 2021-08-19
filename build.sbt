@@ -32,10 +32,13 @@ lazy val server = (project in file("server"))
   .settings(commonSettings)
   .settings(
     libraryDependencies ++= Seq(
-      "com.typesafe.akka" %% "akka-http"                 % "10.2.4",
-      "de.heikoseeberger" %% "akka-http-circe"           % "1.36.0",
-      "com.typesafe.akka" %% "akka-stream"               % "2.6.15",
-      "com.typesafe.akka" %% "akka-actor-typed"          % "2.6.15"
+      "com.typesafe.akka" %% "akka-http"        % "10.2.4",
+      "de.heikoseeberger" %% "akka-http-circe"  % "1.36.0",
+      "com.typesafe.akka" %% "akka-stream"      % "2.6.15",
+      "com.typesafe.akka" %% "akka-actor-typed" % "2.6.15",
+      "io.circe"          %% "circe-core"       % "0.13.0",
+      "io.circe"          %% "circe-generic"    % "0.13.0",
+      "io.circe"          %% "circe-parser"     % "0.13.0"
     )
   )
 
