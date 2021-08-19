@@ -22,7 +22,7 @@ lazy val client = (project in file("client"))
       "com.github.japgolly.scalajs-react" %%% "core"          % "1.7.7",
       "com.github.japgolly.scalajs-react" %%% "extra"         % "1.7.7"
     ),
-    npmDependencies in Compile ++= Seq("react" -> "16.13.1", "react-dom" -> "16.13.1"),
+    Compile / npmDependencies ++= Seq("react" -> "16.13.1", "react-dom" -> "16.13.1"),
     (fastOptJS / webpackBundlingMode) := BundlingMode.LibraryAndApplication(),
     Compile / fastOptJS / artifactPath := ((Compile / fastOptJS / crossTarget).value /
     ((fastOptJS / moduleName).value + "-opt.js"))
@@ -35,8 +35,7 @@ lazy val server = (project in file("server"))
       "com.typesafe.akka" %% "akka-http"                 % "10.2.4",
       "de.heikoseeberger" %% "akka-http-circe"           % "1.36.0",
       "com.typesafe.akka" %% "akka-stream"               % "2.6.15",
-      "com.typesafe.akka" %% "akka-actor-typed"          % "2.6.15",
-      "org.mdedetrich"    %% "sbt-digest-reverse-router" % "0.2.0"      
+      "com.typesafe.akka" %% "akka-actor-typed"          % "2.6.15"
     )
   )
 
