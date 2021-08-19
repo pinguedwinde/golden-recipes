@@ -29,7 +29,6 @@ lazy val client = (project in file("client"))
   )
 
 lazy val server = (project in file("server"))
-  .enablePlugins(WebScalaJSBundlerPlugin)
   .settings(commonSettings)
   .settings(
     libraryDependencies ++= Seq(
@@ -37,14 +36,8 @@ lazy val server = (project in file("server"))
       "de.heikoseeberger" %% "akka-http-circe"           % "1.36.0",
       "com.typesafe.akka" %% "akka-stream"               % "2.6.15",
       "com.typesafe.akka" %% "akka-actor-typed"          % "2.6.15",
-      "org.mdedetrich"    %% "sbt-digest-reverse-router" % "0.2.0",
-      "com.vmunier"       %% "scalajs-scripts"           % "1.1.4"      
-    ),
-    scalaJSProjects := Seq(client),
-    Assets / WebKeys.packagePrefix := "public/",
-    Runtime / managedClasspath += (Assets / packageBin).value,
-    Assets / pipelineStages := Seq(scalaJSPipeline),
-    pipelineStages := Seq(digest)
+      "org.mdedetrich"    %% "sbt-digest-reverse-router" % "0.2.0"      
+    )
   )
 
 lazy val root = (project in file("."))

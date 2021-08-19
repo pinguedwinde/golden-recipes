@@ -15,26 +15,8 @@ object Home {
   private val component = ScalaComponent
     .builder[Props]("Home")
     .render_P { props =>
-
-      val boxStyle = TagMod(
-        ^.display := "flex",
-        ^.flexDirection := "column"
-      )
-
       <.div(
-        ^.display := "flex",
-        ^.flexDirection := "column",
-        <.div(
-          ^.className := "card",
-          ^.marginBottom := "20px",
-          <.div(
-            ^.className := "class-body",
-            boxStyle,
-            props.ctl.link(AppRouter.Page.Home)(
-              "Home"
-            )
-          )
-        ),
+        <.p("hello world")
       )
     }
     .build
