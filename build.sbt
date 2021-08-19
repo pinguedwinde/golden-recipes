@@ -7,7 +7,7 @@ lazy val commonSettings = Seq(
   )
 )
 
-lazy val client = project
+lazy val client = (project in file("client"))
   .enablePlugins(ScalaJSBundlerPlugin)
   .settings(commonSettings)
   .settings(
@@ -28,7 +28,7 @@ lazy val client = project
     ((fastOptJS / moduleName).value + "-opt.js"))
   )
 
-lazy val server = project
+lazy val server = (project in file("server"))
   .enablePlugins(WebScalaJSBundlerPlugin)
   .settings(commonSettings)
   .settings(
@@ -50,4 +50,3 @@ lazy val server = project
 lazy val root = (project in file("."))
   .aggregate(server)
   .aggregate(client)
-  .settings(scalaVersion := "2.13.6")
