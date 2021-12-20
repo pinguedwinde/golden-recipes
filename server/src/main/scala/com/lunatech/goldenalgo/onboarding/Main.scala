@@ -5,11 +5,12 @@
 package com.lunatech.goldenalgo.onboarding
 
 import akka.actor.ActorSystem
+
 import scala.concurrent.ExecutionContext
 
 object Main {
 
-  def main(args: Array[String]) = {
+  def main(args: Array[String]): Unit = {
     implicit val system: ActorSystem  = ActorSystem("main-system")
     implicit val ec: ExecutionContext = system.dispatcher
 
