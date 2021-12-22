@@ -1,8 +1,8 @@
-version: '2.2'
+version: '3.0'
 services:
-  es01:
+  elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.16.1
-    container_name: elasticsearch
+    container_name: es-container
     environment:
       - node.name=es01
       - discovery.type=single-node
@@ -10,7 +10,23 @@ services:
       - data01:/usr/share/elasticsearch/data
     ports:
       - 9200:9200
+    networks:
+      - es-net
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.16.2
+    container_name: kibana
+    environment:
+      - ELASTICSEARCH_HOSTS=http://es-container:9200
+    ports:
+      - 5601:5601
+    networks:
+      - es-net
+    depends_on:
+      - elasticsearch
 
 volumes:
   data01:
     driver: local
+networks:
+  es-net:
+    driver: bridge

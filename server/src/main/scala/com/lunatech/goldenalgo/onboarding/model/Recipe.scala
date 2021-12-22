@@ -1,4 +1,4 @@
-package com.lunatech.goldenalgo.onboarding
+package com.lunatech.goldenalgo.onboarding.model
 
 import io.circe._
 import io.circe.generic.semiauto._

@@ -1,4 +1,6 @@
-package com.lunatech.goldenalgo.onboarding
+package com.lunatech.goldenalgo.onboarding.service
+
+import com.lunatech.goldenalgo.onboarding.model.{Recipe, RecipeData}
 
 import scala.concurrent.ExecutionContext
 
@@ -67,7 +69,7 @@ object RecipeService {
           "and allow the potatoes to dry for about 30 seconds. Turn off the heat.",
         "Mash the potatoes with a potato masher twice around the pot, then add the butter and milk. Continue to mash until " +
           "smooth and fluffy. Whisk in the salt and black pepper until evenly distributed, about 15 seconds."
-        ),
+      ),
       Set("Potatoes", "Milked", "Butter")
     ),
     Recipe(
@@ -116,10 +118,10 @@ object RecipeService {
 
   def fetchAllRecipes(): Set[Recipe] = recipes
 
-  def findRecipeById(id: String): Option[Recipe] =  recipes.find(_.id == id)
+  def findRecipeById(id: String): Option[Recipe] = recipes.find(_.id == id)
 
   def saveRecipe(recipeData: RecipeData): CreatedRecipesResponse = {
-    val id  = s"${recipes.size + 1}"
+    val id = s"${recipes.size + 1}"
     val recipe = Recipe(id, recipeData)
     recipes = recipes + recipe
     CreatedRecipesResponse(id, "A recipe was successfully created")
@@ -135,7 +137,7 @@ object RecipeService {
       updatedRecipe
     }
 
-  def deleteRecipe(id: String): Boolean ={
+  def deleteRecipe(id: String): Boolean = {
     recipes.find(_.id == id) match {
       case Some(recipe) =>
         recipes = recipes - recipe
@@ -148,6 +150,7 @@ object RecipeService {
     for {
       recipe <- recipes.find(_.id == recipeId)
     } yield {
+      val t = recipe.tags ++ tags
       val updatedRecipe = Recipe(recipeId, recipe.name, recipe.ingredients, recipe.instructions, recipe.tags ++ tags)
       recipes = recipes - recipe
       recipes = recipes + updatedRecipe
@@ -155,12 +158,12 @@ object RecipeService {
     }
 
   def searchRecipesByIngredientAndTag(ingredientTerm: Option[String], tagTerm: Option[String]): Set[Recipe] = {
-    if(ingredientTerm.isEmpty && tagTerm.isEmpty) recipes
-    else if(ingredientTerm.isDefined && tagTerm.isEmpty) {
+    if (ingredientTerm.isEmpty && tagTerm.isEmpty) recipes
+    else if (ingredientTerm.isDefined && tagTerm.isEmpty) {
       searchRecipes(containsIngredientTerm = true, containsTagTerm = false, ingredientTerm, tagTerm)
-    } else if(ingredientTerm.isEmpty && tagTerm.isDefined) {
+    } else if (ingredientTerm.isEmpty && tagTerm.isDefined) {
       searchRecipes(containsIngredientTerm = false, containsTagTerm = true, ingredientTerm, tagTerm)
-    } else{
+    } else {
       searchRecipes(containsIngredientTerm = true, containsTagTerm = true, ingredientTerm, tagTerm)
     }
   }
@@ -172,10 +175,10 @@ object RecipeService {
       ingredient <- recipe.ingredients
       instruction <- recipe.instructions
       if (
-          containsCaseInsensitive(ingredient, textOption)
-            || containsCaseInsensitive(tag, textOption)
-            || containsCaseInsensitive(instruction, textOption)
-            || containsCaseInsensitive(recipe.name, textOption)
+        containsCaseInsensitive(ingredient, textOption)
+          || containsCaseInsensitive(tag, textOption)
+          || containsCaseInsensitive(instruction, textOption)
+          || containsCaseInsensitive(recipe.name, textOption)
         )
     } yield recipe
   }

@@ -1,17 +1,18 @@
-package com.lunatech.goldenalgo.onboarding
+package com.lunatech.goldenalgo.onboarding.controller
 
 import akka.http.scaladsl.model.StatusCodes._
 import akka.http.scaladsl.model._
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
+import com.lunatech.goldenalgo.onboarding.model.RecipeData
+import com.lunatech.goldenalgo.onboarding.service.RecipeService._
 import de.heikoseeberger.akkahttpcirce.FailFastCirceSupport
-import io.circe.syntax._
+import io.circe.syntax.EncoderOps
 
 import scala.concurrent.ExecutionContext
 
-class Controller()(implicit val ec: ExecutionContext) extends FailFastCirceSupport{
+class RecipeController()(implicit val ec: ExecutionContext) extends FailFastCirceSupport{
 
-  import RecipeService._
   import io.circe.generic.auto._
 
   case class ResourceNotFound(

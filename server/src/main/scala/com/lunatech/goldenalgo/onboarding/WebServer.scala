@@ -3,12 +3,13 @@ package com.lunatech.goldenalgo.onboarding
 import akka.actor.ActorSystem
 import akka.http.scaladsl.Http.ServerBinding
 import akka.http.scaladsl.server.Directives._
+
 import scala.io.StdIn
-import scala.concurrent.{ ExecutionContext, Future }
-
+import scala.concurrent.{ExecutionContext, Future}
 import akka.http.scaladsl.Http
+import com.lunatech.goldenalgo.onboarding.controller.RecipeController
 
-class WebServer(controller: Controller)(implicit val system: ActorSystem, executor: ExecutionContext) {
+class WebServer(controller: RecipeController)(implicit val system: ActorSystem, executor: ExecutionContext) {
 
   def bind(): Future[ServerBinding] = {
 
