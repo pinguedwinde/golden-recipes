@@ -8,8 +8,10 @@ case class Recipe(id: String, name: String, ingredients: Seq[String], instructio
 object Recipe {
   implicit val codec: Codec[Recipe] = deriveCodec[Recipe]
 
-  def apply(id: String, recipeData: RecipeData): Recipe = new Recipe(
-    id, recipeData.name, recipeData.ingredients, recipeData.instructions, recipeData.tags
+  type RecipeId = String
+
+  def apply(id: String, recipeDto: RecipeDto): Recipe = new Recipe(
+    id, recipeDto.name, recipeDto.ingredients, recipeDto.instructions, recipeDto.tags
   )
 
   def apply(id: String, recipe: Recipe): Recipe = new Recipe(
@@ -17,8 +19,8 @@ object Recipe {
   )
 }
 
-case class RecipeData(name: String, ingredients: Seq[String], instructions: Seq[String], tags: Set[String])
+case class RecipeDto(name: String, ingredients: Seq[String], instructions: Seq[String], tags: Set[String])
 
-object RecipeData {
-  implicit val codec: Codec[RecipeData] = deriveCodec[RecipeData]
+object RecipeDto {
+  implicit val codec: Codec[RecipeDto] = deriveCodec[RecipeDto]
 }

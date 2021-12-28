@@ -4,7 +4,7 @@ import akka.http.scaladsl.model.StatusCodes._
 import akka.http.scaladsl.model._
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
-import com.lunatech.goldenalgo.onboarding.model.RecipeData
+import com.lunatech.goldenalgo.onboarding.model.RecipeDto
 import com.lunatech.goldenalgo.onboarding.service.RecipeService._
 import de.heikoseeberger.akkahttpcirce.FailFastCirceSupport
 import io.circe.syntax.EncoderOps
@@ -14,13 +14,6 @@ import scala.concurrent.ExecutionContext
 class RecipeController()(implicit val ec: ExecutionContext) extends FailFastCirceSupport{
 
   import io.circe.generic.auto._
-
-  case class ResourceNotFound(
-                               msg: String,
-                               reason: String = NotFound.reason,
-                               code: Int = NotFound.intValue,
-                               timestamp: Long = System.currentTimeMillis()
-                             )
 
   /**
    * Retrieve all recipes               GET -> /recipes
@@ -40,12 +33,12 @@ class RecipeController()(implicit val ec: ExecutionContext) extends FailFastCirc
           concat(
             get{
               log.info("Accepted GET -> /recipes")
-              complete(HttpEntity(ContentTypes.`application/json`, fetchAllRecipes().asJson.noSpaces))
+              complete(findAllRecipes())
             },
             post{
-              entity(as[RecipeData]){ recipe =>
+              entity(as[RecipeDto]){ recipe =>
                 log.info("Accepted POST -> /recipes")
-                complete((Created, saveRecipe(recipe)))
+                complete((Created, insertRecipe(recipe)))
               }
             }
           )
@@ -58,52 +51,44 @@ class RecipeController()(implicit val ec: ExecutionContext) extends FailFastCirc
             log.info(s"Accepted /recipes/filter?ingredient=$ingredientOption&tag=$tagOption")
             complete(searchRecipesByIngredientAndTag(ingredientOption, tagOption))
         },
+        path(Segment / "tags"){ id =>
+          post{
+            log.info(s"Accepted POST -> recipes/$id/tags")
+            entity(as[Set[String]]){ tags =>
+              complete(insertTagsIntoRecipe(id, tags))
+            }
+          }
+        },
         path(Segment){ id =>
           concat(
             pathEndOrSingleSlash{
               concat(
                 get{
                   log.info(s"Accepted GET -> recipes/$id")
-                  findRecipeById(id)
-                    .fold{
-                      complete(NotFound,
-                        ResourceNotFound(s"Recipe with id $id not found")
-                      )
-                    }(recipe => complete(OK, recipe))
+                  complete((OK, findRecipeById(id)))
                 },
                 put{
-                  entity(as[RecipeData]){ recipeData =>
+                  entity(as[RecipeDto]){ recipeData =>
                     log.info(s"Accepted PUT -> recipes/$id")
-                    updateRecipe(id, recipeData)
-                      .fold {
-                        complete(NotFound,
-                          ResourceNotFound(s"Recipe with id $id not found. Cannot update this recipe")
-                        )
-                      }(complete(OK, _))
+                    complete((OK, updateRecipeById(id, recipeData)))
                   }
                 },
                 delete{
                   log.info(s"Accepted DELETE -> recipes/$id")
-                  complete(OK, deleteRecipe(id))
+                  complete(OK, deleteRecipeById(id))
                 }
               )
-            },
-            path("tags"){
-              post{
-                log.info(s"Accepted GET -> recipes/$id/tags")
-                entity(as[Set[String]]){ tags =>
-                  tagRecipe(id, tags)
-                    .fold {
-                      complete(NotFound,
-                        ResourceNotFound(s"Recipe with id $id not found. Cannot tag this recipe")
-                      )
-                    }(complete(OK, _))
-                }
-              }
             }
           )
         }
       )
     }
+
+  case class ResourceNotFound(
+                               msg: String,
+                               reason: String = NotFound.reason,
+                               code: Int = NotFound.intValue,
+                               timestamp: Long = System.currentTimeMillis()
+                             )
 
 }

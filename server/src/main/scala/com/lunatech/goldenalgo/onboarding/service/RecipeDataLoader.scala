@@ -4,7 +4,7 @@ import com.lunatech.goldenalgo.onboarding.model.Recipe
 
 import scala.io.Source
 
-object RecipeManager {
+object RecipeDataLoader {
 
   import io.circe.parser._
 

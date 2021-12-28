@@ -8,7 +8,7 @@ import akka.actor.ActorSystem
 import com.lunatech.goldenalgo.onboarding.controller.RecipeController
 import com.lunatech.goldenalgo.onboarding.es.EsClientManager
 import com.lunatech.goldenalgo.onboarding.repository.RecipeRepository
-import com.lunatech.goldenalgo.onboarding.service.RecipeManager
+import com.lunatech.goldenalgo.onboarding.service.RecipeDataLoader
 
 import scala.concurrent.ExecutionContext
 
@@ -22,9 +22,8 @@ object Main {
     val controller = new RecipeController()
 
     val recipesFile = "recipes.json"
-
     EsClientManager.indexBulkFromRecipesList {
-      RecipeManager.readFromFile(recipesFile)
+      RecipeDataLoader.readFromFile(recipesFile)
     }
 
     new WebServer(controller)

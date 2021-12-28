@@ -19,12 +19,12 @@ object EsClientManager {
   val props: ElasticProperties = ElasticProperties("http://localhost:9200")
   val esClient: ElasticClient = ElasticClient(JavaClient(props))
 
-  val RECIPE_INDEX = "recipes"
-  val RECIPE_NAME_FIELD = "name"
-  val RECIPE_INSTRUCTIONS_FIELD = "instructions"
-  val RECIPE_INGREDIENTS_FIELD = "ingredients"
-  val RECIPE_TAGS_FIELD = "tags"
-  val RECIPE_PICTURE_FIELD = "picture"
+  val RecipeIndex = "recipes"
+  val RecipeNameField = "name"
+  val RecipeInstructionsField = "instructions"
+  val RecipeIngredientsField = "ingredients"
+  val RecipeTagsField = "tags"
+  val RecipePictureField = "picture"
 
   def doesIndexExist(name: String): Boolean =
     esClient.execute {
@@ -47,7 +47,7 @@ object EsClientManager {
    */
   def indexBulkFromRecipesList(recipes: List[Recipe]): Future[Response[BulkResponse]] = {
     val requests = recipes.map {
-      recipe => indexInto(RECIPE_INDEX) withId recipe.id  doc recipe.asJson.noSpaces
+      recipe => indexInto(RecipeIndex) withId recipe.id  doc recipe.asJson.noSpaces
     }
     esClient.execute {
       bulk(requests)
