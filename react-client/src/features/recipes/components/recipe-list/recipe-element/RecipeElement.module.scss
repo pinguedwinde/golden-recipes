@@ -1,0 +1,11 @@
+.container {
+  width: 320px;
+  height: 580px;
+  overflow: hidden;
+  margin: 30px;
+  cursor: pointer;
+  &:hover {
+    transform: scale(1.05);
+    transition: all 0.3s;
+  }
+}

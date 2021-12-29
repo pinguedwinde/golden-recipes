@@ -4,6 +4,7 @@ import akka.http.scaladsl.model.StatusCodes._
 import akka.http.scaladsl.model._
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
+import com.lunatech.goldenalgo.onboarding.configuration.CorsHandler
 import com.lunatech.goldenalgo.onboarding.model.RecipeDto
 import com.lunatech.goldenalgo.onboarding.service.RecipeService._
 import de.heikoseeberger.akkahttpcirce.FailFastCirceSupport
@@ -26,7 +27,9 @@ class RecipeController()(implicit val ec: ExecutionContext) extends FailFastCirc
    * Search for a word in the recipes   GET ->  /recipes/search?term=term
    */
 
-  val routes: Route =
+  private val corsHandler: CorsHandler = new CorsHandler {}
+
+  val recipesRoutes: Route =
     (pathPrefix("recipes") & extractLog){ log =>
       concat(
         pathEndOrSingleSlash{
@@ -83,6 +86,8 @@ class RecipeController()(implicit val ec: ExecutionContext) extends FailFastCirc
         }
       )
     }
+
+  val routes: Route =  corsHandler.corsHandler(recipesRoutes)
 
   case class ResourceNotFound(
                                msg: String,

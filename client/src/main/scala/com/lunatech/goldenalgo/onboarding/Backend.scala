@@ -11,6 +11,5 @@ object Backend {
   def fetchRecipes(): Unit = Ajax.get("/recipes").onComplete {
     case Success(xhr) => decode[List[Recipe]](xhr.responseText)
     case Failure(t) => println("An error has occurred: " + t.getMessage)
-
   }
 }

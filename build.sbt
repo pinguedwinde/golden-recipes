@@ -12,15 +12,17 @@ lazy val client = (project in file("client"))
   .settings(commonSettings)
   .settings(
     scalaJSUseMainModuleInitializer := true,
+    jsEnv := new org.scalajs.jsenv.jsdomnodejs.JSDOMNodeJSEnv(),
+    testFrameworks += new TestFramework("utest.runner.Framework"),
     libraryDependencies ++= Seq(
-      "org.scala-js"                      %%% "scalajs-dom"   % "1.0.0",
+      "org.scala-js"                      %%% "scalajs-dom"   % "1.1.0",
       "io.suzaku"                         %%% "diode-core"    % "1.1.13",
       "io.suzaku"                         %%% "diode-react"   % "1.1.13",
       "io.circe"                          %%% "circe-core"    % "0.13.0",
       "io.circe"                          %%% "circe-generic" % "0.13.0",
       "io.circe"                          %%% "circe-parser"  % "0.13.0",
       "com.github.japgolly.scalajs-react" %%% "core"          % "1.7.7",
-      "com.github.japgolly.scalajs-react" %%% "extra"         % "1.7.7"
+      "com.github.japgolly.scalajs-react" %%% "extra"         % "1.7.7",
     ),
     Compile / npmDependencies ++= Seq("react" -> "16.13.1", "react-dom" -> "16.13.1"),
     (fastOptJS / webpackBundlingMode) := BundlingMode.LibraryAndApplication(),
