@@ -14,7 +14,7 @@ export default class RecipeElement extends Component {
       >
         <div>
           <img
-            alt="film"
+            alt="recipe"
             width="320"
             src={require(`../../../../../assets/img/recipe${
               this.props.index + 1

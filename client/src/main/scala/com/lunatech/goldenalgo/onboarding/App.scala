@@ -1,5 +1,7 @@
 package com.lunatech.goldenalgo.onboarding
 
+import com.lunatech.goldenalgo.onboarding.router.AppRouter
+
 import scala.scalajs.js.annotation.{JSExport, JSExportTopLevel}
 import org.scalajs.dom
 import org.scalajs.dom._

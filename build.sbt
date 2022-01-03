@@ -23,8 +23,9 @@ lazy val client = (project in file("client"))
       "io.circe"                          %%% "circe-parser"  % "0.13.0",
       "com.github.japgolly.scalajs-react" %%% "core"          % "1.7.7",
       "com.github.japgolly.scalajs-react" %%% "extra"         % "1.7.7",
+      "com.github.japgolly.scalacss"      %%% "core"          % "0.8.0-RC1"
     ),
-    Compile / npmDependencies ++= Seq("react" -> "16.13.1", "react-dom" -> "16.13.1"),
+    Compile / npmDependencies ++= Seq("react" -> "17.0.2", "react-dom" -> "17.0.2"),
     (fastOptJS / webpackBundlingMode) := BundlingMode.LibraryAndApplication(),
     Compile / fastOptJS / artifactPath := ((Compile / fastOptJS / crossTarget).value /
     ((fastOptJS / moduleName).value + "-opt.js"))

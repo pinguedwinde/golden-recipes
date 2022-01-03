@@ -1,0 +1,36 @@
+.recipe-element .container {
+  width: 300px;
+  height: 580px;
+  overflow: hidden;
+  margin: 30px;
+  cursor: pointer;
+}
+.recipe-element .container:hover {
+  transform: scale(1.05);
+  transition: all 0.3s;
+}
+.recipe-element .container img {
+  width: 300px;
+}
+
+.recipe-details {
+  width: 100%;
+  max-width: 1200px;
+  padding: 2rem 2rem 10rem 2rem;
+}
+.recipe-details .container {
+  width: 480px;
+  height: 680px;
+  overflow: hidden;
+  margin: 30px;
+  cursor: pointer;
+}
+.recipe-details .container img {
+  width: 480px;
+}
+
+.recipe-list {
+  padding-bottom: 7rem;
+}
+
+/*# sourceMappingURL=recipes.css.map */

@@ -1,0 +1,11 @@
+.header-container{
+  font-size: 1.2rem;
+
+  li, .logo{
+    &:hover{
+      color: #fff;
+      opacity: 0.8;
+      cursor: pointer;
+    }
+  }
+}

@@ -1,0 +1,9 @@
+.header-container {
+  font-size: 1.2rem;
+}
+.header-container li:hover, .header-container .logo:hover {
+  opacity: 0.8;
+  cursor: pointer;
+}
+
+/*# sourceMappingURL=header.css.map */
