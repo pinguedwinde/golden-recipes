@@ -1,16 +1,16 @@
 package com.lunatech.goldenalgo.onboarding
 
+import com.lunatech.goldenalgo.onboarding.css.AppCss
 import com.lunatech.goldenalgo.onboarding.router.AppRouter
-
-import scala.scalajs.js.annotation.{JSExport, JSExportTopLevel}
 import org.scalajs.dom
-import org.scalajs.dom._
-import japgolly.scalajs.react.vdom.html_<^._
+
+import scala.scalajs.js.annotation.JSExport
 
 object App {
 
   @JSExport
   def main(args: Array[String]): Unit = {
+    AppCss.load()
     val app = dom.document.getElementById("app")
     AppRouter.router().renderIntoDOM(app)
   }

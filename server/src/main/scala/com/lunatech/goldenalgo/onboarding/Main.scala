@@ -7,7 +7,6 @@ package com.lunatech.goldenalgo.onboarding
 import akka.actor.ActorSystem
 import com.lunatech.goldenalgo.onboarding.controller.RecipeController
 import com.lunatech.goldenalgo.onboarding.es.EsClientManager
-import com.lunatech.goldenalgo.onboarding.repository.RecipeRepository
 import com.lunatech.goldenalgo.onboarding.service.RecipeDataLoader
 
 import scala.concurrent.ExecutionContext

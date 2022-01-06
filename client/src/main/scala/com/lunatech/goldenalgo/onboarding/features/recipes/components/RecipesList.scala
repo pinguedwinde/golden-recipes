@@ -1,7 +1,6 @@
 package com.lunatech.goldenalgo.onboarding.features.recipes.components
 
-import com.lunatech.goldenalgo.onboarding.features.recipes.components.RecipeElement.Props
-import com.lunatech.goldenalgo.onboarding.model.Recipe
+import com.lunatech.goldenalgo.onboarding.model.Recipe.Recipes
 import com.lunatech.goldenalgo.onboarding.router.AppRouter
 import japgolly.scalajs.react.ScalaComponent
 import japgolly.scalajs.react.component.Scala.Unmounted
@@ -12,7 +11,7 @@ import scala.util.Random
 
 object RecipesList {
 
-  case class Props(ctl: RouterCtl[AppRouter.Page], recipes: Seq[Recipe])
+  case class Props(ctl: RouterCtl[AppRouter.Page], recipes: Recipes)
 
   private val random = Random
 
@@ -23,7 +22,7 @@ object RecipesList {
         props.recipes.toTagMod(recipe => RecipeElement(RecipeElement.Props(
           props.ctl,
           recipe,
-          random.nextInt(12) + 1
+          random.nextInt(32) + 1
         )))
       )
     ).build

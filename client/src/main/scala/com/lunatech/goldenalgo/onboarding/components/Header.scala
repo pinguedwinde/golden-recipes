@@ -1,7 +1,7 @@
 package com.lunatech.goldenalgo.onboarding.components
 
-import com.lunatech.goldenalgo.onboarding.router.AppRouter.Page
 import com.lunatech.goldenalgo.onboarding.router.AppRouter
+import com.lunatech.goldenalgo.onboarding.router.AppRouter.Page
 import japgolly.scalajs.react.ScalaComponent
 import japgolly.scalajs.react.component.Scala.Unmounted
 import japgolly.scalajs.react.extra.router.RouterCtl
@@ -31,7 +31,7 @@ object Header {
           <.ul(
             ^.className :="navbar-nav ml-auto",
             <.li(
-              ^.className :="nav-item nav-link active",
+              ^.className :="nav-item nav-link",
               "Recipes",
               props.ctrl setOnClick AppRouter.RecipesPage
             ),
@@ -39,6 +39,11 @@ object Header {
               ^.className :="nav-item nav-link",
               "Search",
               props.ctrl setOnClick AppRouter.SearchPage
+            ),
+            <.li(
+              ^.className :="nav-item nav-link",
+              "Add a recipe",
+              props.ctrl setOnClick AppRouter.AddRecipePage
             )
           )
         )

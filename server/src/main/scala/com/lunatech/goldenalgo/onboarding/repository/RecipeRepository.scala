@@ -26,12 +26,12 @@ trait RecipeRepository {
    * They are mapped to be the same
    */
 
-  def findAll(): Future[Array[Recipe]]
+  def findAll(): Future[Seq[Recipe]]
   def findById(id: String): Future[Option[Recipe]]
-  def findByName(name: String): Future[Array[Recipe]]
-  def findByField(fieldName: String, fieldValue: String): Future[Array[Recipe]]
-  def findByIngredientAndTag(ingredient: String, tag: String): Future[Array[Recipe]]
-  def findByAnyWord(word: String): Future[Array[Recipe]]
+  def findByName(name: String): Future[Seq[Recipe]]
+  def findByField(fieldName: String, fieldValue: String): Future[Seq[Recipe]]
+  def findByIngredientAndTag(ingredient: String, tag: String): Future[Seq[Recipe]]
+  def findByAnyWord(word: String): Future[Seq[Recipe]]
   def insert(recipeDto: RecipeDto): Future[Recipe]
   def insertTags(id: String, tags: Set[String]): Future[RecipeId]
   def updateById(id: String, recipeData: RecipeDto): Future[RecipeId]
@@ -47,12 +47,12 @@ object RecipeRepository extends RecipeRepository {
       decode[Recipe](hit.sourceAsString).toTry
   }
 
-  override def findAll(): Future[Array[Recipe]] =
-    mapToFutureOfRecipesArray {
-      esClient.execute {
-        search(RecipeIndex)
-      }
-    }
+  override def findAll(): Future[Seq[Recipe]] =
+    mapToFutureOfRecipesArray({
+          esClient.execute {
+            search(RecipeIndex)
+          }
+        })
 
   override def findById(id: String): Future[Option[Recipe]] =
     esClient.execute {
@@ -62,38 +62,38 @@ object RecipeRepository extends RecipeRepository {
         getResponse.toOpt[Recipe]
       }
 
-  override def findByName(name: String): Future[Array[Recipe]] =
-    mapToFutureOfRecipesArray {
-      esClient.execute {
-        search(RecipeIndex).query(name)
-      }
-    }
+  override def findByName(name: String): Future[Seq[Recipe]] =
+    mapToFutureOfRecipesArray({
+          esClient.execute {
+            search(RecipeIndex).query(name)
+          }
+        })
 
-  override def findByField(fieldName: String, fieldValue: String): Future[Array[Recipe]] =
-    mapToFutureOfRecipesArray {
-      esClient.execute {
-        search(RecipeIndex).matchQuery(fieldName, fieldValue)
-      }
-    }
+  override def findByField(fieldName: String, fieldValue: String): Future[Seq[Recipe]] =
+    mapToFutureOfRecipesArray({
+          esClient.execute {
+            search(RecipeIndex).matchQuery(fieldName, fieldValue)
+          }
+        })
 
-  override def findByIngredientAndTag(ingredient: String, tag: String): Future[Array[Recipe]] =
-    mapToFutureOfRecipesArray {
-      esClient.execute {
-        search(RecipeIndex) query {
-          boolQuery() must (
-            termQuery(RecipeIngredientsField, ingredient),
-            termQuery(RecipeTagsField, tag)
-          )
-        }
-      }
-    }
+  override def findByIngredientAndTag(ingredient: String, tag: String): Future[Seq[Recipe]] =
+    mapToFutureOfRecipesArray({
+          esClient.execute {
+            search(RecipeIndex) query {
+              boolQuery() must (
+                termQuery(RecipeIngredientsField, ingredient),
+                termQuery(RecipeTagsField, tag)
+              )
+            }
+          }
+        })
 
-  override def findByAnyWord(word: String): Future[Array[Recipe]] =
-    mapToFutureOfRecipesArray {
-      esClient.execute {
-        search(RecipeIndex) query multiMatchQuery(word)
-      }
-    }
+  override def findByAnyWord(word: String): Future[Seq[Recipe]] =
+    mapToFutureOfRecipesArray({
+          esClient.execute {
+            search(RecipeIndex) query multiMatchQuery(word)
+          }
+        })
 
   override def insert(recipeDto: RecipeDto): Future[Recipe] = {
     val id = UUID.randomUUID().toString
@@ -140,7 +140,7 @@ object RecipeRepository extends RecipeRepository {
         deleteResponse.id
       }
 
-  private def mapToFutureOfRecipesArray(responseFuture: Future[Response[SearchResponse]]) : Future[Array[Recipe]] =
+  private def mapToFutureOfRecipesArray(responseFuture: Future[Response[SearchResponse]]) : Future[Seq[Recipe]] =
     responseFuture.map(_.result)
       .map{ searchResponse =>
         searchResponse.hits.hits.map(_.to[Recipe])

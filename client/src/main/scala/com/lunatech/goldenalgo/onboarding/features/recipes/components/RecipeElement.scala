@@ -18,26 +18,23 @@ object RecipeElement {
       <.div(
         ^.className := "recipe-element",
         <.div(
-          ^.className := "container d-flex flex-column bg-light",
+          ^.className := "container d-flex flex-column align-items-center bg-light",
+          <.img(
+            ^.alt := "recipe",
+            ^.width :="320",
+            ^.src := s"client/src/main/resources/static/assets/img/recipe${props.imgNumber}.jpg"
+          ),
           <.div(
-            <.img(
-              ^.alt := "recipe",
-              ^.width :="320",
-              ^.src := s"client/src/main/resources/static/assets/img/recipe${props.imgNumber}.jpg"
+            ^.className := "p-3 text-center",
+            <.h5(props.recipe.name),
+            <.hr(
+              ^.className := "w-100"
             ),
-            <.div(
-              ^.className := "p-3 text-center",
-              <.h5(props.recipe.name),
-              <.hr(
-                ^.className := "w-100"
-              ),
-              <.span(
-                ^.className := "text-secondary",
-                props.recipe.tags.mkString(" | ")
-              )
-            ),
-
-          )
+            <.span(
+              ^.className := "text-secondary ",
+              props.recipe.tags.mkString(" | ")
+            )
+          ),
         ),
         props.ctl setOnClick AppRouter.RecipeDetailsPage(props.recipe.id, props.imgNumber),
       )

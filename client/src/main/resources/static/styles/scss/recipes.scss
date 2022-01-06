@@ -1,6 +1,6 @@
 .recipe-element{
   .container {
-    width: 300px;
+    width: 340px;
     height: 580px;
     overflow: hidden;
     margin: 30px;
@@ -12,6 +12,11 @@
 
     img{
       width: 300px;
+      height: 540px;
+    }
+
+    span{
+      line-height: 2rem;
     }
   }
 }

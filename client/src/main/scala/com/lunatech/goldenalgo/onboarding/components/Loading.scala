@@ -1,8 +1,7 @@
 package com.lunatech.goldenalgo.onboarding.components
 
-import japgolly.scalajs.react.component.Scala.{Component, Unmounted}
-import japgolly.scalajs.react.{Children, CtorType, ScalaComponent, UpdateSnapshot}
-import japgolly.scalajs.react.component.builder.Builder
+import japgolly.scalajs.react.ScalaComponent
+import japgolly.scalajs.react.component.Scala.Unmounted
 import japgolly.scalajs.react.vdom.html_<^._
 
 object Loading {

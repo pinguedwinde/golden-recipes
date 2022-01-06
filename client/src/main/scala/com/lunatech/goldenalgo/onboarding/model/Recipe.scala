@@ -15,4 +15,5 @@ case class Recipe(
 object Recipe {
   implicit val codec: Codec[Recipe] = deriveCodec[Recipe]
   type RecipeId = String
+  type Recipes = Seq[Recipe]
 }

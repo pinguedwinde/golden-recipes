@@ -1,8 +1,5 @@
 package com.lunatech.goldenalgo.onboarding
 
-import utest.{TestSuite, Tests, test}
-
-import org.scalajs.dom
 import org.scalajs.dom.document
 import org.scalajs.dom.ext._
 

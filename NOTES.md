@@ -118,12 +118,13 @@ GET recipes/_mapping/field/name
 
 - **[scalajs-react](https://github.com/japgolly/scalajs-react)**
 - **[Diode state management](https://github.com/suzaku-io/diode)**
+- **[Diode state management document](https://diode.suzaku.io/)**
 - **[Example live demo for routing (chandu0101)](http://chandu0101.github.io/scalajs-react-template/)**
 - **[Code source for this project (chandu0101)](https://github.com/chandu0101/scalajs-react-template/blob/master/src/main/scala/scalajsreact/template/routes/AppRouter.scala)**
 - **[Scala Examples for org.scalajs.dom.ext.Ajax](https://www.programcreek.com/scala/org.scalajs.dom.ext.Ajax)**
 - **[Online japgolly examples](https://japgolly.github.io/scalajs-react/#examples/ajax-1)**
 - **[Scala weather app](https://github.com/malaman/scala-weather-app)**
-- **[]()**
+- **[The familiar TodoMVC application implemented in Diode React. Adapted from TodoMVC Scala.js React](https://github.com/suzaku-io/diode/tree/master/examples/todomvc)**
 - **[]()**
 - **[]()**
 

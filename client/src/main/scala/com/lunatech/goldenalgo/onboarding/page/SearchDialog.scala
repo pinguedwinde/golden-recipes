@@ -2,6 +2,8 @@ package com.lunatech.goldenalgo.onboarding.page
 
 import com.lunatech.goldenalgo.onboarding.api.RecipeApiClient.futureGet
 import com.lunatech.goldenalgo.onboarding.components.Loading
+import com.lunatech.goldenalgo.onboarding.css.Bootstrap.{formControl, formOutline, h4, m5, mb4, mxAuto, p5, px5, py1, textCenter}
+import com.lunatech.goldenalgo.onboarding.css.GlobalStyle.darkBtn
 import com.lunatech.goldenalgo.onboarding.features.recipes.components.RecipesList
 import com.lunatech.goldenalgo.onboarding.model.Recipe
 import com.lunatech.goldenalgo.onboarding.router.AppRouter
@@ -10,6 +12,7 @@ import japgolly.scalajs.react.vdom.VdomElement
 import japgolly.scalajs.react.vdom.html_<^._
 import japgolly.scalajs.react.{BackendScope, Callback, CallbackTo, ReactEventFromInput, ScalaComponent}
 import org.scalajs.dom.html.Div
+import scalacss.ScalaCssReact._
 
 import scala.concurrent.ExecutionContext.Implicits.global
 
@@ -27,7 +30,7 @@ object SearchDialog {
 
   class Backend($: BackendScope[Props, State]) {
 
-    def onRecipeInputChange(e: ReactEventFromInput): CallbackTo[Unit] = {
+    def onRecipeInputChange(e: ReactEventFromInput): Callback = {
       val newValue = e.target.value
       $.modState(_.copy(recipeText = newValue))
     }
@@ -62,21 +65,21 @@ object SearchDialog {
     def render(p: Props, s: State): VdomTagOf[Div] = {
       <.div(
         <.div(
-          ^.className := "text-center m-5",
+          textCenter, m5,
           <.h2(
             "Search for our golden recipes enjoy it!"
           ),
           <.form(
-            ^.className := "p-5 mx-auto",
+            p5, mxAuto,
             ^.maxWidth := "780px",
             <.p(
-              ^.className := "h4 mb-4",
+              h4, mb4,
               "Find a recipe a keyword"
             ),
             <.div(
-              ^.className := "form-outline mb-4",
+              formOutline, mb4,
               <.input(
-                ^.className := "form-control",
+                formControl,
                 ^.`type` := "text",
                 ^.id := "recipe-keyword",
                 ^.placeholder := "Search recipes",
@@ -84,23 +87,23 @@ object SearchDialog {
               )
             ),
             <.button(
-              ^.className := "btn btn-dark btn-block my-4",
+              darkBtn,
               ^.`type` := "button",
               ^.onClick --> onSearchByRecipe(s.recipeText),
               "Search"
             )
           ),
           <.form(
-            ^.className := "px-5 py-1 mx-auto",
+            mxAuto, px5, py1,
             ^.maxWidth := "780px",
             <.p(
-              ^.className := "h4 mb-4",
+             h4, mb4,
               "Or find recipes by ingredients and tags"
             ),
             <.div(
-              ^.className := "form-outline mb-4",
+              formOutline, mb4,
               <.input(
-                ^.className := "form-control",
+                formControl,
                 ^.`type` := "text",
                 ^.id := "ingredient-keyword",
                 ^.placeholder := s"Ingredient keyword",
@@ -108,9 +111,9 @@ object SearchDialog {
               )
             ),
             <.div(
-              ^.className := "form-outline mb-4",
+              formOutline, mb4,
               <.input(
-                ^.className := "form-control",
+                formControl,
                 ^.`type` := "text",
                 ^.id := "tag-keyword",
                 ^.placeholder := "Tag keyword",
@@ -118,7 +121,7 @@ object SearchDialog {
               )
             ),
             <.button(
-              ^.className := "btn btn-dark btn-block my-4",
+              darkBtn,
               ^.`type` := "button",
               "Search",
               ^.onClick --> onSearchByIngredientAndTag(s.ingredientText, s.tagText)

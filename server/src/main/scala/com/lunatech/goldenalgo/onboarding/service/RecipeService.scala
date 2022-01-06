@@ -15,11 +15,11 @@ object RecipeService {
 
   case class CreatedRecipesResponse(id: String, msg: String)
 
-  def findAllRecipes(): Future[Array[Recipe]] = findAll()
+  def findAllRecipes(): Future[Seq[Recipe]] = findAll()
 
   def findRecipeById(id: String): Future[Option[Recipe]] = findById(id)
 
-  def findRecipeByName(name: String): Future[Array[Recipe]] = findByName(name)
+  def findRecipeByName(name: String): Future[Seq[Recipe]] = findByName(name)
 
   def insertRecipe(recipeData: RecipeDto): Future[Recipe] = insert(recipeData)
 
@@ -27,7 +27,7 @@ object RecipeService {
 
   def updateRecipeById(id: String, recipeDto: RecipeDto): Future[RecipeId] = updateById(id, recipeDto)
 
-  def searchRecipesByIngredientAndTag(ingredientTerm: Option[String], tagTerm: Option[String]): Future[Array[Recipe]] = {
+  def searchRecipesByIngredientAndTag(ingredientTerm: Option[String], tagTerm: Option[String]): Future[Seq[Recipe]] = {
     if (ingredientTerm.isEmpty && tagTerm.isEmpty) findAll()
     else if (ingredientTerm.isDefined && tagTerm.isEmpty) {
       findByField(RecipeIngredientsField, ingredientTerm.get)
@@ -40,7 +40,7 @@ object RecipeService {
     }
   }
 
-  def searchRecipesByAnyWord(textOption: Option[String]): Future[Array[Recipe]] =
+  def searchRecipesByAnyWord(textOption: Option[String]): Future[Seq[Recipe]] =
     textOption match {
       case Some(word) => findByAnyWord(word)
       case None => findAll()

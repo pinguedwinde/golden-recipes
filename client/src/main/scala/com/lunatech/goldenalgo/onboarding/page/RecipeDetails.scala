@@ -1,17 +1,17 @@
 package com.lunatech.goldenalgo.onboarding.page
 
-import com.lunatech.goldenalgo.onboarding.api.RecipeApiClient.futureGet
-import com.lunatech.goldenalgo.onboarding.components.Loading
+import com.lunatech.goldenalgo.onboarding.css.Bootstrap.{alignItemsCenter, bgLight, dFlex, flexColumn, justifyContent, textCenter, w100}
+import com.lunatech.goldenalgo.onboarding.css.GlobalStyle.heading3
+import com.lunatech.goldenalgo.onboarding.diode.{AppCircuit, RefreshSelectedRecipe}
 import com.lunatech.goldenalgo.onboarding.features.recipes.components.RecipeElement.ImgNumber
 import com.lunatech.goldenalgo.onboarding.model.Recipe
 import com.lunatech.goldenalgo.onboarding.model.Recipe.RecipeId
-import com.lunatech.goldenalgo.onboarding.router.AppRouter
+import diode.react.ModelProxy
 import japgolly.scalajs.react.vdom.VdomElement
 import japgolly.scalajs.react.vdom.html_<^._
 import japgolly.scalajs.react.{BackendScope, Callback, ScalaComponent}
 import org.scalajs.dom.html.Div
-
-import scala.concurrent.ExecutionContext.Implicits.global
+import scalacss.ScalaCssReact._
 
 object RecipeDetails {
 
@@ -23,33 +23,29 @@ object RecipeDetails {
     Seq("tag1", "tag2", "tag3")
   )
 
-  case class Props(id: RecipeId, imgNumber: ImgNumber)
+  case class Props(proxy: ModelProxy[Option[Recipe]], id: RecipeId, imgNumber: ImgNumber)
 
-  case class State(recipe: Recipe, isLoaded: Boolean =  false)
+  class Backend($: BackendScope[Props, Unit]) {
 
-  class Backend($: BackendScope[Props, State]) {
-
-    def fetch: Callback = Callback.future {
-      futureGet[Recipe](s"recipes/${$.props.runNow().id}").map { recipe =>
-        $.modState(s => s.copy(recipe = recipe, isLoaded = true))
-      }
+    def fetch: Callback = $.props.map { props =>
+      AppCircuit.dispatch(RefreshSelectedRecipe(props.id))
     }
 
-    def render(p: Props, s: State): VdomTagOf[Div] = {
-      <.div(
-        if(!s.isLoaded)
-          Loading()
-        else
+    def render(p: Props): VdomTagOf[Div] = {
+      p.proxy() match {
+        case None => <.div()
+        case Some(recipe) =>
           <.div(
-            ^.className := "d-flex flex-column align-items-center justify-content",
+            dFlex, flexColumn, alignItemsCenter, justifyContent,
             <.div(
               ^.className := "text-center m-5",
               <.h2(
-                s"${s.recipe.name}"
+                s"${recipe.name}"
               )
             ),
             <.div(
-              ^.className := "recipe-details bg-light d-flex flex-column align-items-center text-center",
+              bgLight, dFlex, flexColumn, alignItemsCenter, textCenter,
+              ^.className := "recipe-details",
               <.div(
                 ^.className := "container",
                 <.img(
@@ -58,23 +54,19 @@ object RecipeDetails {
                   ^.src := s"client/src/main/resources/static/assets/img/recipe${p.imgNumber}.jpg"
                 )
               ),
-              <.hr(
-                ^.className := "w-100"
-              ),
+              <.hr(w100),
               <.span(
                 ^.className := "text-secondary",
-                s.recipe.tags.mkString(" | ")
+                recipe.tags.mkString(" | ")
               ),
-              <.hr(
-                ^.className := "w-100"
-              ),
+              <.hr(w100),
               <.h3(
-                ^.className := "w-100 p-3 bg-dark text-light",
+                heading3,
                 "The ingredients' list"
               ),
               <.ul(
                 ^.className := "w-100 list-group list-group-flush text-left",
-                s.recipe.ingredients.toTagMod{ ingredient =>
+                recipe.ingredients.toTagMod{ ingredient =>
                   <.li(
                     ^.className := "w-100 list-group-item",
                     ingredient
@@ -82,12 +74,12 @@ object RecipeDetails {
                 }
               ),
               <.h3(
-                ^.className := "w-100 mt-4 p-3 bg-dark text-light",
+                heading3,
                 "Steps"
               ),
               <.ol(
                 ^.className := "w-100 list-group list-group-flush text-left",
-                s.recipe.instructions.toTagMod{ instruction =>
+                recipe.instructions.toTagMod{ instruction =>
                   <.li(
                     ^.className := "w-100 list-group-item",
                     instruction
@@ -96,17 +88,17 @@ object RecipeDetails {
               ),
             )
           )
-      )
+      }
+
     }
   }
 
   private val component = ScalaComponent
     .builder[Props]("RecipeDetails")
-    .initialState(State(null))
     .renderBackend[Backend]
     .componentDidMount(_.backend.fetch)
     .build
 
-  def apply(id: String, imgNumber: ImgNumber): VdomElement = component(Props(id, imgNumber))
+  def apply(proxy: ModelProxy[Option[Recipe]], id: RecipeId, imgNumber: ImgNumber): VdomElement = component(Props(proxy, id, imgNumber))
 
 }
