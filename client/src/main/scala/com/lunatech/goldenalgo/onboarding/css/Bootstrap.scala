@@ -44,8 +44,8 @@ object Bootstrap extends StyleSheet.Inline {
     addClassName("flex-column")
   )
 
-  val justifyContent: StyleA = style(
-    addClassName("justify-content")
+  val justifyContentCenter: StyleA = style(
+    addClassName("justify-content-center")
   )
 
   val alignItemsCenter: StyleA = style(

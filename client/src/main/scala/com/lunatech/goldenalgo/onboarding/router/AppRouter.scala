@@ -36,7 +36,7 @@ object AppRouter {
       | staticRoute(root, HomePage) ~> renderR(renderHome)
       | staticRoute("#recipes", RecipesPage) ~> renderR(renderHome)
       | staticRoute("#recipes/search", SearchPage) ~> renderR(ctl => SearchDialog(ctl))
-      | staticRoute("#recipes/add", AddRecipePage) ~> renderR(ctl => AddRecipe())
+      | staticRoute("#recipes/add", AddRecipePage) ~> renderR(ctl => AddRecipe(ctl))
       | dynamicRouteCT[RecipeDetailsPage](recipeDetailsRoute) ~> (o => renderR(_ => renderRecipeDetails(o.id, o.imgNumber)))
       | staticRoute("#notfound", NotFound) ~> render(<.h2("NOT FOUND"))
       ).notFound { _ =>

@@ -29,6 +29,7 @@ class RecipesHandler[M](modelRW: ModelRW[M, RecipesModel]) extends ActionHandler
     case LoadRecipes() => effectOnly(loadRecipesEffect())
     case RefreshSelectedRecipe(id) => effectOnly(refreshSelectedRecipeEffect(id))
     case GetRecipes(recipes) => updated(value.copy(recipes = recipes))
+    case AddRecipeToRecipes(recipe) => updated(value.copy(recipes = modelRW.value.recipes :+ recipe))
     case SelectRecipe(selectedRecipe) => updated(value.copy(selectedRecipe = selectedRecipe))
     case SetRecipesLoadingState() => updated(value.copy(isRecipesLoading = true))
     case UnSetRecipesLoadingState() => updated(value.copy(isRecipesLoading = false))

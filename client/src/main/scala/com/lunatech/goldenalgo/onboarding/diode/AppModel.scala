@@ -17,6 +17,7 @@ case class AppModel(recipesModel: RecipesModel)
 case class LoadRecipes() extends Action
 case class RefreshSelectedRecipe(id: RecipeId) extends Action
 case class GetRecipes(recipes: Recipes) extends Action
+case class AddRecipeToRecipes(recipe: Recipe) extends Action
 case class SelectRecipe(recipe: Option[Recipe] ) extends Action
 case class SetRecipesLoadingState() extends Action
 case class UnSetRecipesLoadingState() extends Action

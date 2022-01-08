@@ -1,6 +1,6 @@
 package com.lunatech.goldenalgo.onboarding.page
 
-import com.lunatech.goldenalgo.onboarding.css.Bootstrap.{alignItemsCenter, bgLight, dFlex, flexColumn, justifyContent, textCenter, w100}
+import com.lunatech.goldenalgo.onboarding.css.Bootstrap.{alignItemsCenter, bgLight, dFlex, flexColumn, justifyContentCenter, textCenter, w100}
 import com.lunatech.goldenalgo.onboarding.css.GlobalStyle.heading3
 import com.lunatech.goldenalgo.onboarding.diode.{AppCircuit, RefreshSelectedRecipe}
 import com.lunatech.goldenalgo.onboarding.features.recipes.components.RecipeElement.ImgNumber
@@ -36,7 +36,7 @@ object RecipeDetails {
         case None => <.div()
         case Some(recipe) =>
           <.div(
-            dFlex, flexColumn, alignItemsCenter, justifyContent,
+            dFlex, flexColumn, alignItemsCenter, justifyContentCenter,
             <.div(
               ^.className := "text-center m-5",
               <.h2(
