@@ -1,5 +1,8 @@
 *.class
 *.log
 .idea
+.bsp
+.vscode
 **/target
 *.jpg
+**/node_modules
